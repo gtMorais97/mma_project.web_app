@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model events {
+  id       Int       @id @default(autoincrement())
+  name     String?   @unique @db.VarChar
+  location String?   @db.VarChar
+  date     DateTime? @db.Date
+}
+
+model fight_judging {
+  fight_id     Int     @id
+  judge1       String? @db.VarChar
+  judge1_score String? @db.VarChar
+  judge2       String? @db.VarChar
+  judge2_score String? @db.VarChar
+  judge3       String? @db.VarChar
+  judge3_score String? @db.VarChar
+  fights       fights  @relation(fields: [fight_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model fighters {
+  id                          Int     @id @default(autoincrement())
+  name                        String? @unique @db.VarChar
+  nickname                    String? @db.VarChar
+  height_cm                   Int?
+  weight_lbs                  Int?
+  reach_cm                    Int?
+  stance                      String? @db.VarChar
+  strikes_landed_per_minute   Float?
+  strikes_absorbed_per_minute Float?
+  striking_accuracy           Float?
+  striking_defence            Float?
+  takedowns_per_15            Float?
+  takedown_accuracy           Float?
+  takedown_defence            Float?
+  submission_attempts_per_15  Float?
+}
+
+model fights {
+  id                         Int            @id @default(autoincrement())
+  event_id                   Int?
+  winning_fighter_id         Int?
+  losing_fighter_id          Int?
+  weight_class               String?        @db.VarChar
+  method_of_victory          String?        @db.VarChar
+  specific_method_of_victory String?        @db.VarChar
+  ending_round               Int?
+  ending_round_time          Int?
+  referee                    String?        @db.VarChar
+  bonus                      String?        @default("None") @db.VarChar
+  date                       DateTime?      @db.Date
+  fight_judging              fight_judging?
+  rounds                     rounds[]
+
+  @@unique([event_id, winning_fighter_id, losing_fighter_id], map: "fights_event_id_winning_fighter_id_losing_fighter_id_idx")
+}
+
+model rankings {
+  weight_class String @db.VarChar
+  rank         String @db.VarChar
+  fighter_name String @db.VarChar
+
+  @@id([weight_class, fighter_name])
+}
+
+model rounds {
+  id                             Int     @id @default(autoincrement())
+  fight_id                       Int?
+  event_id                       Int?
+  fighter_id                     Int?
+  opponent_id                    Int?
+  round_number                   Int?
+  knockdowns                     Int?
+  total_strikes_attempted        Int?
+  total_strikes_landed           Int?
+  significant_strikes_attempted  Int?
+  significant_strikes_landed     Int?
+  significant_distance_attempted Int?
+  significant_distance_landed    Int?
+  significant_clinch_attempted   Int?
+  significant_clinch_landed      Int?
+  significant_ground_attempted   Int?
+  significant_ground_landed      Int?
+  significant_head_attempted     Int?
+  significant_head_landed        Int?
+  significant_body_attempted     Int?
+  significant_body_landed        Int?
+  significant_leg_attempted      Int?
+  significant_leg_landed         Int?
+  takedowns_attempted            Int?
+  takedowns_landed               Int?
+  submission_attempts            Int?
+  reversals                      Int?
+  control_time                   Int?
+  controlled_time                Int?
+  standing_time                  Int?
+  fights                         fights? @relation(fields: [fight_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([fight_id, fighter_id, round_number], map: "rounds_fight_id_fighter_id_round_number_idx")
+}
