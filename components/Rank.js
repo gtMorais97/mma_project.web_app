@@ -1,8 +1,7 @@
 import { getOpponentSurname } from "../lib/htmlFillers";
 
 export function Rank({ rank }) {
-
-    const isPerMinuteRank = rank.id.includes("per")
+    const isPerMinuteRank = /per(.*)minute/i.test(rank.id)
 
     //calculating the rank positions
     const isTimeRank = ("time" in rank.content[0])
