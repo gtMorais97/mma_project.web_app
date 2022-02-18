@@ -3,15 +3,18 @@ import Chart from 'chart.js/auto';
 
 const FONT_COLOR = "white"
 
-export function BarChart({ rank, median, max }) {
+export function BarChart({ rank, median, max: maxObject }) {
     const rank_values = rank.content.map(x => x.value)
+    var maxSqlObject = undefined
     var values = median ? [...rank_values, median.content.median] : rank_values
     var newRecord = false
-    if (max) {
-        if (values[0] === max.content.max) {
+
+    if (maxObject) {
+        maxSqlObject = maxObject.content[0]
+        if (values[0] === maxSqlObject.max && maxObject.content.length === 1) {
             newRecord = true
         } else {
-            values = [max.content.max, ...values]
+            values = [maxSqlObject.max, ...values]
         }
     }
     values.sort((a, b) => rank.descending ? b - a : a - b)
@@ -23,7 +26,7 @@ export function BarChart({ rank, median, max }) {
             data: values,
             backgroundColor: values.map((value, index) => {
 
-                if (max && index === 0) {
+                if (maxObject && index === 0) {
                     if (newRecord) {
                         return "gold"
                     } else {
@@ -41,15 +44,15 @@ export function BarChart({ rank, median, max }) {
         }
     ]
     var labels = rank.content.map(x => x.fighter_name.split(" ").pop())
-    if (max) {
+    if (maxObject) {
         if (newRecord) {
             labels[0] = labels[0] + " (New UFC Record)"
         } else {
-            labels = [`UFC Record`, ...labels]
+            labels = [`Record`, ...labels]
         }
     }
     if (median) {
-        labels.splice(medianIndex, 0, "UFC Median")
+        labels.splice(medianIndex, 0, "Median (all time)")
     }
 
     const data = {
@@ -60,8 +63,6 @@ export function BarChart({ rank, median, max }) {
         fontColor: "white",
         responsive: true,
         maintainAspectRatio: true,
-
-
 
         scales: {
             yAxes: {
@@ -87,10 +88,10 @@ export function BarChart({ rank, median, max }) {
 
         plugins: {
             title: {
-                display: () => max !== undefined,
+                display: () => maxObject !== undefined,
                 text: () => {
-                    if (max) {
-                        return `UFC Record set by ${max.content.fighter_name.split(" ").pop()} vs ${max.content.opponent_name.split(" ").pop()} (${max.content.max} ${rank.id})`
+                    if (maxObject) {
+                        return `Record set by ${maxSqlObject.fighter_name.lastWord()} vs ${maxSqlObject.opponent_name.lastWord()}: ${maxObject.showAsTimeStamp ? maxSqlObject.time : +(maxSqlObject.max + Number.EPSILON).toFixed(2)} ${maxObject.suffix}`
                     }
                 },
                 color: 'white',
@@ -103,10 +104,14 @@ export function BarChart({ rank, median, max }) {
     }
 
     return (
-        <div className=' h-auto'>
+        <div className='h-auto'>
             <Bar data={data} options={options} />
         </div>
     )
 
 
+}
+
+String.prototype.lastWord = function lastWord() {
+    return this.split(" ").pop();
 }
