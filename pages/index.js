@@ -64,7 +64,7 @@ export default function Home({
   //   }))
   // }))
   const buttonStyle = 'text-lg font-semibold p-1 pb-2 mx-3 text-white hover:outline outline-cyan-900 outline-4 focus:outline rounded-xl'
-
+  const currentYear = new Date().getFullYear()
   return (
     <div>
       <Head>
@@ -148,10 +148,14 @@ export default function Home({
             medians={currentMedians} maxes={currentMaxes} />
         </div>
 
-        <footer className='flex justify-center font-mono text-base text-white'>
+        <p className='flex justify-center font-mono text-base text-white'>
           {currentRanks.hasOwnProperty(totalsFilter) && currentFilter === perMinuteFilter &&
             "*Minimum 1 minute of total/striking/grappling time (whichever one is applicable)"
           }
+        </p>
+        <br />
+        <footer className='flex justify-center font-mono text-base text-white'>
+          <small>&copy; Copyright {currentYear}, Last UFC Ranks</small>
         </footer>
         <br />
       </div>
