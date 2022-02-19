@@ -15,11 +15,12 @@ import { getMaxes_striking } from '../lib/maxes/maxes_striking';
 import { fastestFinishesId, perMinuteFilter, totalsFilter } from '../lib/RankVariables';
 import { getMaxes_grappling } from '../lib/maxes/maxes_grappling';
 import { getMaxes_time } from '../lib/maxes/maxes_time';
+import maxes from '../savedStats/maxes.json'
+
 
 export default function Home({
   strikingRanks, grapplingRanks, timeRanks,
-  strikingMedians, grapplingMedians, timeMedians,
-  strikingMaxes, grapplingMaxes, timeMaxes
+  strikingMedians, grapplingMedians, timeMedians
 }) {
 
   const rankTypes = Object.freeze({
@@ -29,8 +30,8 @@ export default function Home({
   })
 
   const [currentRanks, setRanks] = useState(strikingRanks)
-  const [currentMedians, setMedians] = useState(strikingMedians)
-  const [currentMaxes, setMaxes] = useState(strikingMaxes)
+  const [currentMedians, setMedians] = useState([])
+  const [currentMaxes, setMaxes] = useState(maxes[rankTypes.STRIKING])
 
   const [rankType, setRankType] = useState(undefined)
   const [currentFilter, setFilter] = useState(totalsFilter)
@@ -41,22 +42,24 @@ export default function Home({
       case rankTypes.STRIKING:
         setRanks(strikingRanks)
         setMedians(strikingMedians)
-        setMaxes(strikingMaxes)
+        setMaxes(maxes[rankTypes.STRIKING])
         break;
       case rankTypes.GRAPPLING:
         setRanks(grapplingRanks)
         setMedians(grapplingMedians)
-        setMaxes(grapplingMaxes)
+        setMaxes(maxes[rankTypes.GRAPPLING])
         break;
       case rankTypes.TIME:
         setRanks(timeRanks)
         setMedians(timeMedians)
-        setMaxes(timeMaxes)
+        setMaxes(maxes[rankTypes.TIME])
         break;
     }
     setFilter(totalsFilter)
     setRankSelector(undefined)
   }, [rankType])
+
+
 
   // Promise.all(ranks.map(async (rank) => {
   //   Promise.all(rank.content.map(async (element) => {

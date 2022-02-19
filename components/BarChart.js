@@ -5,16 +5,16 @@ const FONT_COLOR = "white"
 
 export function BarChart({ rank, median, max: maxObject }) {
     const rank_values = rank.content.map(x => x.value)
-    var maxSqlObject = undefined
-    var values = median ? [...rank_values, median.content.median] : rank_values
+    var values = median ?
+        [...rank_values, median.content.median] :
+        rank_values
     var newRecord = false
 
     if (maxObject) {
-        maxSqlObject = maxObject.content[0]
-        if (values[0] === maxSqlObject.max && maxObject.content.length === 1) {
+        if ((values[0] > maxObject.max && !maxObject.ascending) || (values[0] < maxObject.max && maxObject.ascending)) {
             newRecord = true
         } else {
-            values = [maxSqlObject.max, ...values]
+            values = [maxObject.max, ...values]
         }
     }
     values.sort((a, b) => rank.descending ? b - a : a - b)
@@ -91,7 +91,7 @@ export function BarChart({ rank, median, max: maxObject }) {
                 display: () => maxObject !== undefined,
                 text: () => {
                     if (maxObject) {
-                        return `Record set by ${maxSqlObject.fighter_name.lastWord()} vs ${maxSqlObject.opponent_name.lastWord()}: ${maxObject.showAsTimeStamp ? maxSqlObject.time : +(maxSqlObject.max + Number.EPSILON).toFixed(2)} ${maxObject.suffix}`
+                        return `Record set by ${maxObject.fighter_name.lastWord()} vs ${maxObject.opponent_name.lastWord()}: ${maxObject.time ? maxObject.time : +(maxObject.max + Number.EPSILON).toFixed(2)} ${maxObject.suffix ?? ""}`
                     }
                 },
                 color: 'white',
