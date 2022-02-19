@@ -1,0 +1,101 @@
+{
+    "striking": {
+        "Significant Strikes": {
+            "max": 445,
+            "fighter_name": "Max Holloway",
+            "opponent_name": "Calvin Kattar"
+        },
+        "Knockdowns": {
+            "max": 5,
+            "fighter_name": "Jeremy Stephens",
+            "opponent_name": "Gilbert Melendez"
+        },
+        "Significant Distance Strikes": {
+            "max": 439,
+            "fighter_name": "Max Holloway",
+            "opponent_name": "Calvin Kattar"
+        },
+        "Significant Head Strikes": {
+            "max": 274,
+            "fighter_name": "Max Holloway",
+            "opponent_name": "Calvin Kattar"
+        },
+        "Significant Body Strikes": {
+            "max": 117,
+            "fighter_name": "Max Holloway",
+            "opponent_name": "Calvin Kattar"
+        },
+        "Significant Leg Strikes": {
+            "max": 78,
+            "fighter_name": "Joanna Jedrzejczyk",
+            "opponent_name": "Michelle Waterson"
+        },
+        "Significant Strikes per Minute": {
+            "max": 27,
+            "fighter_name": "Uros Medic",
+            "opponent_name": "Alon Cruz"
+        },
+        "Significant Distance Strikes per Standing Minute": {
+            "max": 27.87,
+            "fighter_name": "Nick Diaz",
+            "opponent_name": "Marius Žaromskis"
+        },
+        "Significant Head Strikes per Minute": {
+            "max": 25.8,
+            "fighter_name": "Uros Medic",
+            "opponent_name": "Alon Cruz"
+        },
+        "Significant Body Strikes per Minute": {
+            "max": 8.62,
+            "fighter_name": "Antonio Rogerio Nogueira",
+            "opponent_name": "Tito Ortiz"
+        },
+        "Significant Leg Strikes per Minute": {
+            "max": 36.86,
+            "fighter_name": "Aaron Simpson",
+            "opponent_name": "Mario Miranda"
+        }
+    },
+    "grappling": {
+        "Takedowns": {
+            "max": 21,
+            "fighter_name": "Khabib Nurmagomedov",
+            "opponent_name": "Abel Trujillo"
+        },
+        "Takedowns Defended": {
+            "max": 28,
+            "fighter_name": "Sam Stout",
+            "opponent_name": "Per Ekland"
+        },
+        "Submission Attempts": {
+            "max": 11,
+            "fighter_name": "Daniel Puder",
+            "opponent_name": "Richard Dalton"
+        },
+        "Takedowns per Standing Minute": {
+            "max": 8.57,
+            "fighter_name": "Chris Wade",
+            "opponent_name": "Mehdi Baghdad"
+        },
+        "Significant Grounds strikes per Grappling Minute": {
+            "max": 35.34,
+            "fighter_name": "Chris Weidman",
+            "opponent_name": "Vitor Belfort"
+        }
+    },
+    "time": {
+        "Fastest Finishes": {
+            "max": 5,
+            "fighter_name": "Jorge Masvidal",
+            "opponent_name": "Ben Askren",
+            "ascending": true,
+            "suffix": "seconds"
+        },
+        "Control Time": {
+            "max": 1342,
+            "fighter_name": "Sean Sherk",
+            "opponent_name": "Hermes Franca",
+            "time": "22:22"
+        }
+    }
+}

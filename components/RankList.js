@@ -10,7 +10,7 @@ export function RankList({ ranks, medians, maxes }) {
                     return (
                         <div className=" grid grid-cols-2 items-center">
                             <Rank key={rankId} rank={ranks[rankId]} />
-                            <BarChart rank={ranks[rankId]} median={medians.find(m => m.id === rankId)} max={maxes.find(m => m.id === rankId)} />
+                            <BarChart rank={ranks[rankId]} median={medians.find(m => m.id === rankId)} max={maxes[rankId]} />
                         </div>
                     )
                 }
