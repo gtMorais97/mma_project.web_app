@@ -35,17 +35,17 @@ export function Rank({ rank }) {
 
 
     return (
-        <div className=" p-7 bg-cyan-900  m-5 text-lg rounded-xl">
-            <h2 className="text-center text-xl font-bold text-white pb-3 font-mono">
+        <div className=" p-7 bg-cyan-900  m-5  rounded-xl">
+            <h2 className="text-center md:text-xl sm:text-s font-bold text-white pb-3 font-mono">
                 {isPerMinuteRank ? rank.id + '*' : rank.id}
             </h2>
-            <div className="table text-left text-white w-full first:text-lg">
+            <div className="table text-left sm:text-xs md:text-base text-white sm:text-xs w-full ">
                 <div className="table-row-group ">
                     {
                         rank.content.map((element, index) =>
                             <div className="table-row text-base font-mono">
                                 <div className="table-cell"> {positions[index]}. </div>
-                                <div className="table-cell pr-5">
+                                <div className="table-cell pr-1">
                                     {element['fighter_name']} {getOpponentSurname(element)}
                                 </div>
                                 <div className="table-cell">{isTimeRank ? element.time : +(element.value + Number.EPSILON).toFixed(2)}</div>
