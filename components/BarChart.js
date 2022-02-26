@@ -104,7 +104,7 @@ export function BarChart({ rank, median, max: maxObject }) {
     }
 
     return (
-        <div className='flex justify-self-center h-auto sm:max-w-xs'>
+        <div className='flex md:justify-self-center h-auto sm:max-w-xs'>
             <Bar data={data} options={options} />
         </div>
     )
