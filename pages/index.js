@@ -66,7 +66,7 @@ export default function Home({
   //     element.tapology = await getFighterTapology(element.fighter_name)
   //   }))
   // }))
-  const buttonStyle = 'text-lg font-semibold p-1 pb-2 mx-3 text-white hover:outline outline-cyan-900 outline-4 focus:outline rounded-xl sm:text-base'
+  const buttonStyle = 'text-lg  p-1 pb-2 mx-3 text-white hover:outline outline-cyan-900 outline-4 focus:outline rounded-xl sm:text-base'
   const currentYear = new Date().getFullYear()
   return (
     <div>
@@ -79,7 +79,7 @@ export default function Home({
       <div className=' bg-neutral-900'>
         <nav className=" flow-root items-center justify-between p-5 ">
           <div className=" items-center text-white mr-6">
-            <span className="font-semibold text-3xl sm:text-lg font-mono flow-left">
+            <span className=" font-extrabold text-3xl sm:text-lg font-mono flow-left">
               last event <span className=" rounded-xl bg-cyan-900 pb-1 px-1">ranks</span>
             </span>
             <span className=' font-extralight float-right mt-1 hover:text-cyan-700 sm:text-xs'>
@@ -87,7 +87,7 @@ export default function Home({
             </span>
           </div>
         </nav>
-        <div className='flex justify-center mt-5 mb-2 text-3xl text-white font-mono sm:text-base'>
+        <div className='flex justify-center mt-5 mb-2 text-2xl text-white font-mono font-semibold sm:text-base'>
           <h1>{timeRanks[fastestFinishesId].content[0].event}</h1>
         </div>
         <div className='flex justify-center mt-5 mb-2'>
