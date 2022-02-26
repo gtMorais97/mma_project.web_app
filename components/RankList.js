@@ -4,7 +4,7 @@ import { Rank } from "./Rank";
 
 export function RankList({ ranks, medians, maxes }) {
     return (
-        <div className="grid content-center grid-cols-1 max-w-screen-lg lg:divide-y-2">
+        <div className="grid content-center grid-cols-1 max-w-screen-lg lg:divide-y">
             {
                 Object.keys(ranks).map(rankId => {
                     return (
