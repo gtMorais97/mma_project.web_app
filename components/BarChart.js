@@ -104,7 +104,7 @@ export function BarChart({ rank, median, max: maxObject }) {
     }
 
     return (
-        <div className='h-auto'>
+        <div className='h-auto sm:max-w-xs'>
             <Bar data={data} options={options} />
         </div>
     )

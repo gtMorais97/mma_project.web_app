@@ -35,15 +35,15 @@ export function Rank({ rank }) {
 
 
     return (
-        <div className=" p-7 bg-cyan-900  m-5 rounded-xl max-w-md">
-            <h2 className="text-center text-xl font-bold text-white pb-3 font-mono">
+        <div className=" p-7 bg-cyan-900  m-5 rounded-xl max-w-md sm:max-w-xs">
+            <h2 className="text-center text-xl sm:text-base font-bold text-white pb-3 font-mono">
                 {isPerMinuteRank ? rank.id + '*' : rank.id}
             </h2>
             <div className="table text-left text-white w-full ">
                 <div className="table-row-group ">
                     {
                         rank.content.map((element, index) =>
-                            <div className="table-row text-base font-mono">
+                            <div className="table-row text-base sm:text-sm font-mono">
                                 <div className="table-cell"> {positions[index]}. </div>
                                 <div className="table-cell pr-1">
                                     {element['fighter_name']} {getOpponentSurname(element)}
