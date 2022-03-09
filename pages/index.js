@@ -1,5 +1,4 @@
 import { Drop } from './../components/Drop';
-import { Menu } from './../components/Menu';
 import { Nav } from './../components/Nav';
 import Head from 'next/head'
 
@@ -86,8 +85,44 @@ export default function Home({
           <h1>{timeRanks[fastestFinishesId].content[0].event}</h1>
         </div>
 
-        <Menu buttonStyle={buttonStyle} setRankType={setRankType} currentFilter={currentFilter} totalsFilter={totalsFilter} setFilter={setFilter} setRankSelector={setRankSelector} currentRanks={currentRanks} perMinuteFilter={perMinuteFilter} rankTypes={rankTypes} />
+        <div className='flex justify-center mt-5 mb-2'>
+          <div className=' grid-flow-row-dense grid-cols-3 font-mono max-w-screen-lg '>
 
+            <button className={buttonStyle} onClick={() => {
+              setRankType(rankTypes.STRIKING);
+            }}>
+              Striking
+            </button>
+            <button className={buttonStyle} onClick={() => {
+              setRankType(rankTypes.GRAPPLING);
+            }}>
+              Grappling
+            </button>
+            <button className={buttonStyle} onClick={() => {
+              setRankType(rankTypes.TIME);
+            }}>
+              Time
+            </button>
+          </div>
+
+
+        </div>
+        {currentRanks.hasOwnProperty(totalsFilter) && <div className='flex justify-center mb-2'>
+          <div className=' grid-flow-row-dense grid-cols-2 font-mono max-w-screen-lg'>
+            <button className={buttonStyle} onClick={() => {
+              setFilter(totalsFilter);
+              setRankSelector(undefined);
+            }}>
+              Total
+            </button>
+            <button className={buttonStyle} onClick={() => {
+              setFilter(perMinuteFilter);
+              setRankSelector(undefined);
+            }}>
+              per Minute
+            </button>
+          </div>
+        </div>}
         <Drop setRankSelector={setRankSelector} currentRanks={currentRanks} currentFilter={currentFilter} totalsFilter={totalsFilter} />
 
         <div className=" flex justify-center ">
