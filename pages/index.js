@@ -1,7 +1,9 @@
+import { Drop } from './../components/Drop';
+import { Nav } from './../components/Nav';
 import Head from 'next/head'
 
 import { useEffect, useState } from "react";
-import { Dropdown } from 'rsuite';
+
 import { RankList } from "./../components/RankList";
 import { getLastEventRanks_striking } from '../lib/lastEventRanks/lastEventRanks_striking';
 import { getLastEventRanks_grappling } from '../lib/lastEventRanks/lastEventRanks_grappling';
@@ -69,7 +71,7 @@ export default function Home({
   const buttonStyle = 'text-lg  p-1 pb-2 mx-3 text-white hover:outline outline-cyan-900 outline-4 focus:outline rounded-xl sm:text-base'
   const currentYear = new Date().getFullYear()
   return (
-    <div>
+    <>
       <Head>
         <title>Last Event Ranks</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -77,69 +79,51 @@ export default function Home({
       </Head>
 
       <div className=' bg-neutral-900'>
-        <nav className=" flow-root items-center justify-between p-5 ">
-          <div className=" items-center text-white mr-6">
-            <span className=" font-extrabold text-3xl sm:text-lg font-mono flow-left">
-              last event <span className=" rounded-xl bg-cyan-900 pb-1 px-1">ranks</span>
-            </span>
-            <span className=' font-extralight float-right mt-1 hover:text-cyan-700 sm:text-xs'>
-              <a href='https://www.patreon.com/lasteventranks?fan_landing=true' target="_blank">🥰 Support me 🥰</a>
-            </span>
-          </div>
-        </nav>
+        <Nav />
+
         <div className='flex justify-center mt-5 mb-2 text-2xl text-white font-mono font-semibold sm:text-base'>
           <h1>{timeRanks[fastestFinishesId].content[0].event}</h1>
         </div>
+
         <div className='flex justify-center mt-5 mb-2'>
-
-
           <div className=' grid-flow-row-dense grid-cols-3 font-mono max-w-screen-lg '>
 
-            <button className={buttonStyle} onClick={() => { setRankType(rankTypes.STRIKING) }} >
+            <button className={buttonStyle} onClick={() => {
+              setRankType(rankTypes.STRIKING);
+            }}>
               Striking
             </button>
-            <button className={buttonStyle} onClick={() => { setRankType(rankTypes.GRAPPLING) }} >
+            <button className={buttonStyle} onClick={() => {
+              setRankType(rankTypes.GRAPPLING);
+            }}>
               Grappling
             </button>
-            <button className={buttonStyle} onClick={() => { setRankType(rankTypes.TIME) }} >
+            <button className={buttonStyle} onClick={() => {
+              setRankType(rankTypes.TIME);
+            }}>
               Time
             </button>
           </div>
 
 
         </div>
-        {
-          currentRanks.hasOwnProperty(totalsFilter) &&
-          <div className='flex justify-center mb-2'>
-            <div className=' grid-flow-row-dense grid-cols-2 font-mono max-w-screen-lg'>
-              <button className={buttonStyle} onClick={() => { setFilter(totalsFilter); setRankSelector(undefined) }}>
-                Total
-              </button>
-              <button className={buttonStyle} onClick={() => { setFilter(perMinuteFilter); setRankSelector(undefined) }}>
-                per Minute
-              </button>
-            </div>
+        {currentRanks.hasOwnProperty(totalsFilter) && <div className='flex justify-center mb-2'>
+          <div className=' grid-flow-row-dense grid-cols-2 font-mono max-w-screen-lg'>
+            <button className={buttonStyle} onClick={() => {
+              setFilter(totalsFilter);
+              setRankSelector(undefined);
+            }}>
+              Total
+            </button>
+            <button className={buttonStyle} onClick={() => {
+              setFilter(perMinuteFilter);
+              setRankSelector(undefined);
+            }}>
+              per Minute
+            </button>
           </div>
-        }
-        <div className=' flex justify-center font-mono text-white'>
-          <Dropdown title="Select Rank"
-            onSelect={(eventKey) => {
-              setRankSelector(eventKey)
-            }}
-          >
-            <Dropdown.Item eventKey={undefined}>All</Dropdown.Item>
-            {
-              currentRanks.hasOwnProperty(totalsFilter) ?
-                Object.keys(currentRanks[currentFilter]).map(rankId =>
-                  <Dropdown.Item eventKey={rankId}>{rankId}</Dropdown.Item>
-                )
-                :
-                Object.keys(currentRanks).map(rankId =>
-                  <Dropdown.Item eventKey={rankId}>{rankId}</Dropdown.Item>
-                )
-            }
-          </Dropdown>
-        </div>
+        </div>}
+        <Drop setRankSelector={setRankSelector} currentRanks={currentRanks} currentFilter={currentFilter} totalsFilter={totalsFilter} />
 
         <div className=" flex justify-center ">
           <RankList ranks={
@@ -162,7 +146,7 @@ export default function Home({
         </footer>
         <br />
       </div>
-    </div>
+    </>
   )
 }
 
@@ -197,4 +181,5 @@ export async function getServerSideProps() {
       timeMaxes: timeMaxes,
     }
   }
+
 }
