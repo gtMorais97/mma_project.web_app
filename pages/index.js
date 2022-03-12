@@ -68,7 +68,7 @@ export default function Home({
   //     element.tapology = await getFighterTapology(element.fighter_name)
   //   }))
   // }))
-  const buttonStyle = 'text-lg  p-1 pb-2 mx-3 text-white hover:outline outline-cyan-900 outline-4 focus:outline rounded-xl sm:text-base'
+  const radioStyle = 'relative inline-flex items-center h-full py-2 pr-3 pl-3 space-x-2 font-mono text-white text-lg sm:text-base peer-checked:bg-cyan-900 hover:bg-cyan-900'
   const currentYear = new Date().getFullYear()
   return (
     <>
@@ -86,43 +86,58 @@ export default function Home({
         </div>
 
         <div className='flex justify-center mt-5 mb-2'>
-          <div className=' grid-flow-row-dense grid-cols-3 font-mono max-w-screen-lg '>
+          <div className="inline-flex overflow-hidden rounded-lg border-cyan-900 border-2" >
 
-            <button className={buttonStyle} onClick={() => {
-              setRankType(rankTypes.STRIKING);
-            }}>
-              Striking
-            </button>
-            <button className={buttonStyle} onClick={() => {
-              setRankType(rankTypes.GRAPPLING);
-            }}>
-              Grappling
-            </button>
-            <button className={buttonStyle} onClick={() => {
-              setRankType(rankTypes.TIME);
-            }}>
-              Time
-            </button>
+            <label for="striking" class="cursor-pointer">
+              <input type="radio" name="ranktype" id="striking" class="sr-only peer" defaultChecked onClick={() => {
+                setRankType(rankTypes.STRIKING);
+              }} />
+              <span class={radioStyle}>
+                Striking
+              </span>
+            </label>
+            <label for="grappling" class="cursor-pointer">
+              <input type="radio" name="ranktype" id="grappling" class="sr-only peer" onClick={() => {
+                setRankType(rankTypes.GRAPPLING);
+              }} />
+              <span class={radioStyle}>
+                Grappling
+              </span>
+            </label>
+            <label for="time" class="cursor-pointer">
+              <input type="radio" name="ranktype" id="time" class="sr-only peer" onClick={() => {
+                setRankType(rankTypes.TIME);
+              }} />
+              <span class={radioStyle}>
+                Time
+              </span>
+            </label>
           </div>
-
-
         </div>
-        {currentRanks.hasOwnProperty(totalsFilter) && <div className='flex justify-center mb-2'>
-          <div className=' grid-flow-row-dense grid-cols-2 font-mono max-w-screen-lg'>
-            <button className={buttonStyle} onClick={() => {
-              setFilter(totalsFilter);
-              setRankSelector(undefined);
-            }}>
-              Total
-            </button>
-            <button className={buttonStyle} onClick={() => {
-              setFilter(perMinuteFilter);
-              setRankSelector(undefined);
-            }}>
-              per Minute
-            </button>
-          </div>
-        </div>}
+        {currentRanks.hasOwnProperty(totalsFilter) &&
+          <div className='flex justify-center mb-4 mt-4'>
+            <div className="inline-flex overflow-hidden rounded-lg border-cyan-900 border-2 " >
+
+              <label for="total" class="cursor-pointer">
+                <input type="radio" name="subranktype" id="total" class="sr-only peer" defaultChecked onClick={() => {
+                  setFilter(totalsFilter);
+                  setRankSelector(undefined);
+                }} />
+                <span class={radioStyle}>
+                  Total
+                </span>
+              </label>
+              <label for="per Minute" class="cursor-pointer">
+                <input type="radio" name="subranktype" id="per Minute" class="sr-only peer" onClick={() => {
+                  setFilter(perMinuteFilter);
+                  setRankSelector(undefined);
+                }} />
+                <span class={radioStyle}>
+                  per Minute
+                </span>
+              </label>
+            </div>
+          </div>}
         <Drop setRankSelector={setRankSelector} currentRanks={currentRanks} currentFilter={currentFilter} totalsFilter={totalsFilter} />
 
         <div className=" flex justify-center ">
