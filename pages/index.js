@@ -1,3 +1,5 @@
+import { SubRankTypeSwitch } from './../components/SubRankTypeSwitch';
+import { RankTypeSwitch } from './../components/RankTypeSwitch';
 import { Drop } from './../components/Drop';
 import { Nav } from './../components/Nav';
 import Head from 'next/head'
@@ -85,59 +87,11 @@ export default function Home({
           <h1>{timeRanks[fastestFinishesId].content[0].event}</h1>
         </div>
 
-        <div className='flex justify-center mt-5 mb-2'>
-          <div className="inline-flex overflow-hidden rounded-lg border-cyan-900 border-2" >
+        <RankTypeSwitch rankTypes={rankTypes} setRankType={setRankType} radioStyle={radioStyle} />
 
-            <label for="striking" class="cursor-pointer">
-              <input type="radio" name="ranktype" id="striking" class="sr-only peer" defaultChecked onClick={() => {
-                setRankType(rankTypes.STRIKING);
-              }} />
-              <span class={radioStyle}>
-                Striking
-              </span>
-            </label>
-            <label for="grappling" class="cursor-pointer">
-              <input type="radio" name="ranktype" id="grappling" class="sr-only peer" onClick={() => {
-                setRankType(rankTypes.GRAPPLING);
-              }} />
-              <span class={radioStyle}>
-                Grappling
-              </span>
-            </label>
-            <label for="time" class="cursor-pointer">
-              <input type="radio" name="ranktype" id="time" class="sr-only peer" onClick={() => {
-                setRankType(rankTypes.TIME);
-              }} />
-              <span class={radioStyle}>
-                Time
-              </span>
-            </label>
-          </div>
-        </div>
         {currentRanks.hasOwnProperty(totalsFilter) &&
-          <div className='flex justify-center mb-4 mt-4'>
-            <div className="inline-flex overflow-hidden rounded-lg border-cyan-900 border-2 " >
-
-              <label for="total" class="cursor-pointer">
-                <input type="radio" name="subranktype" id="total" class="sr-only peer" defaultChecked onClick={() => {
-                  setFilter(totalsFilter);
-                  setRankSelector(undefined);
-                }} />
-                <span class={radioStyle}>
-                  Total
-                </span>
-              </label>
-              <label for="per Minute" class="cursor-pointer">
-                <input type="radio" name="subranktype" id="per Minute" class="sr-only peer" onClick={() => {
-                  setFilter(perMinuteFilter);
-                  setRankSelector(undefined);
-                }} />
-                <span class={radioStyle}>
-                  per Minute
-                </span>
-              </label>
-            </div>
-          </div>}
+          <SubRankTypeSwitch setFilter={setFilter} totalsFilter={totalsFilter} setRankSelector={setRankSelector} undefined={undefined} radioStyle={radioStyle} perMinuteFilter={perMinuteFilter} />
+        }
         <Drop setRankSelector={setRankSelector} currentRanks={currentRanks} currentFilter={currentFilter} totalsFilter={totalsFilter} />
 
         <div className=" flex justify-center ">
@@ -157,7 +111,7 @@ export default function Home({
         </p>
         <br />
         <footer className='flex justify-center font-mono text-base text-white'>
-          <small>&copy; Copyright {currentYear}, Last UFC Ranks</small>
+          <small>&copy; Copyright {currentYear}, Last Event Ranks</small>
         </footer>
         <br />
       </div>
