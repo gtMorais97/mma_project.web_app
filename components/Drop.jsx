@@ -7,7 +7,7 @@ export function Drop({
     totalsFilter,
     currentFilter
 }) {
-    return <div className=' flex justify-center font-mono text-white mb-3'>
+    return <div className=' flex justify-center font-mono text-white mb-3 mt-4'>
         <Dropdown title="Select Rank" onSelect={eventKey => {
             setRankSelector(eventKey);
         }}>
