@@ -1,12 +1,15 @@
+import { Footer } from './../components/Footer';
+import { TimeNotice } from './../components/TimeNotice';
+import { EventTitle } from './../components/EventTitle';
 import { SubRankTypeSwitch } from './../components/SubRankTypeSwitch';
 import { RankTypeSwitch } from './../components/RankTypeSwitch';
 import { Drop } from './../components/Drop';
 import { Nav } from './../components/Nav';
+import { RankList } from "./../components/RankList";
 import Head from 'next/head'
 
 import { useEffect, useState } from "react";
 
-import { RankList } from "./../components/RankList";
 import { getLastEventRanks_striking } from '../lib/lastEventRanks/lastEventRanks_striking';
 import { getLastEventRanks_grappling } from '../lib/lastEventRanks/lastEventRanks_grappling';
 import { getLastEventRanks_time } from '../lib/lastEventRanks/lastEventRanks_time';
@@ -19,8 +22,8 @@ import { getMaxes_striking } from '../lib/maxes/maxes_striking';
 import { fastestFinishesId, perMinuteFilter, totalsFilter } from '../lib/RankVariables';
 import { getMaxes_grappling } from '../lib/maxes/maxes_grappling';
 import { getMaxes_time } from '../lib/maxes/maxes_time';
-import maxes from '../savedStats/maxes.json'
 
+import maxes from '../savedStats/maxes.json'
 
 export default function Home({
   strikingRanks, grapplingRanks, timeRanks,
@@ -41,6 +44,7 @@ export default function Home({
   const [currentFilter, setFilter] = useState(totalsFilter)
   const [rankSelector, setRankSelector] = useState(undefined)
 
+  //for whenever the user changes the rank type
   useEffect(() => {
     switch (rankType) {
       case rankTypes.STRIKING:
@@ -64,14 +68,9 @@ export default function Home({
   }, [rankType])
 
 
-
-  // Promise.all(ranks.map(async (rank) => {
-  //   Promise.all(rank.content.map(async (element) => {
-  //     element.tapology = await getFighterTapology(element.fighter_name)
-  //   }))
-  // }))
   const radioStyle = 'relative inline-flex items-center h-full py-2 pr-3 pl-3 space-x-2 font-mono text-white text-lg sm:text-base peer-checked:bg-cyan-900 hover:bg-cyan-900'
   const currentYear = new Date().getFullYear()
+
   return (
     <>
       <Head>
@@ -83,36 +82,30 @@ export default function Home({
       <div className=' bg-neutral-900'>
         <Nav />
 
-        <div className='flex justify-center mt-5 mb-2 text-2xl text-white font-mono font-semibold sm:text-base'>
-          <h1>{timeRanks[fastestFinishesId].content[0].event}</h1>
-        </div>
+        <EventTitle eventTitle={timeRanks[fastestFinishesId].content[0].event} />
 
         <RankTypeSwitch rankTypes={rankTypes} setRankType={setRankType} radioStyle={radioStyle} />
 
         {currentRanks.hasOwnProperty(totalsFilter) &&
-          <SubRankTypeSwitch setFilter={setFilter} totalsFilter={totalsFilter} setRankSelector={setRankSelector} undefined={undefined} radioStyle={radioStyle} perMinuteFilter={perMinuteFilter} />
+          <SubRankTypeSwitch setFilter={setFilter} totalsFilter={totalsFilter} setRankSelector={setRankSelector} radioStyle={radioStyle} perMinuteFilter={perMinuteFilter} />
         }
+
         <Drop setRankSelector={setRankSelector} currentRanks={currentRanks} currentFilter={currentFilter} totalsFilter={totalsFilter} />
 
-        <div className=" flex justify-center ">
-          <RankList ranks={
-            currentRanks.hasOwnProperty(totalsFilter) ?
-              (rankSelector ? { [rankSelector]: currentRanks[currentFilter][rankSelector] } : currentRanks[currentFilter])
-              :
-              (rankSelector ? { [rankSelector]: currentRanks[rankSelector] } : currentRanks)
-          }
-            medians={currentMedians} maxes={currentMaxes} />
-        </div>
+        <RankList ranks={
+          currentRanks.hasOwnProperty(totalsFilter) ?
+            (rankSelector ? { [rankSelector]: currentRanks[currentFilter][rankSelector] } : currentRanks[currentFilter])
+            :
+            (rankSelector ? { [rankSelector]: currentRanks[rankSelector] } : currentRanks)
+        }
+          medians={currentMedians} maxes={currentMaxes}
+        />
 
-        <p className='flex justify-center font-mono text-base text-white'>
-          {currentRanks.hasOwnProperty(totalsFilter) && currentFilter === perMinuteFilter &&
-            "*Minimum 1 minute of total/striking/grappling time (whichever one is applicable)"
-          }
-        </p>
+        {currentRanks.hasOwnProperty(totalsFilter) && currentFilter === perMinuteFilter &&
+          <TimeNotice />
+        }
         <br />
-        <footer className='flex justify-center font-mono text-base text-white'>
-          <small>&copy; Copyright {currentYear}, Last Event Ranks</small>
-        </footer>
+        <Footer currentYear={currentYear} />
         <br />
       </div>
     </>
