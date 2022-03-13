@@ -7,9 +7,8 @@ export function SubRankTypeSwitch({
     radioStyle,
     perMinuteFilter
 }) {
-    return <div className='flex justify-center mb-4 mt-4'>
+    return <div className='flex justify-center mt-4'>
         <div className="inline-flex overflow-hidden rounded-lg border-cyan-900 border-2 ">
-
             <label for="total" class="cursor-pointer">
                 <input type="radio" name="subranktype" id="total" class="sr-only peer" defaultChecked onClick={() => {
                     setFilter(totalsFilter);
