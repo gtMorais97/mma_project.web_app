@@ -25,16 +25,15 @@ import { getMaxes_time } from '../lib/maxes/maxes_time';
 
 import maxes from '../savedStats/maxes.json'
 
+import { rankTypes } from '../lib/utils';
+import { getLastEventRanks } from '../lib/lastEventRanks/lastEventRanksGetter';
+
 export default function Home({
   strikingRanks, grapplingRanks, timeRanks,
   strikingMedians, grapplingMedians, timeMedians
 }) {
 
-  const rankTypes = Object.freeze({
-    STRIKING: "striking",
-    GRAPPLING: "grappling",
-    TIME: "time"
-  })
+
 
   const [currentRanks, setRanks] = useState(strikingRanks)
   const [currentMedians, setMedians] = useState([])
@@ -116,17 +115,15 @@ export default function Home({
 export async function getServerSideProps() {
   const prisma = new PrismaClient()
 
-  const strikingRanks = await getLastEventRanks_striking(prisma)
-  const grapplingRanks = await getLastEventRanks_grappling(prisma)
-  const timeRanks = await getLastEventRanks_time(prisma)
+  const lastEventRanks = await getLastEventRanks(prisma)
+  const strikingRanks = lastEventRanks[rankTypes.STRIKING]
+  const grapplingRanks = lastEventRanks[rankTypes.GRAPPLING]
+  const timeRanks = lastEventRanks[rankTypes.TIME]
 
   const strikingMedians = []//await getMedians_striking(prisma)
   const grapplingMedians = []//await getMedians_grappling(prisma)
   const timeMedians = []//await getMedians_time(prisma)
 
-  const strikingMaxes = await getMaxes_striking(prisma)
-  const grapplingMaxes = await getMaxes_grappling(prisma)
-  const timeMaxes = await getMaxes_time(prisma)
 
   return {
     props: {
@@ -138,9 +135,9 @@ export async function getServerSideProps() {
       grapplingMedians: grapplingMedians,
       timeMedians: timeMedians,
 
-      strikingMaxes: strikingMaxes,
-      grapplingMaxes: grapplingMaxes,
-      timeMaxes: timeMaxes,
+      // strikingMaxes: strikingMaxes,
+      // grapplingMaxes: grapplingMaxes,
+      // timeMaxes: timeMaxes,
     }
   }
 
