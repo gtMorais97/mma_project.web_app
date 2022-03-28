@@ -91,7 +91,7 @@ export function BarChart({ rank, median, max: maxObject }) {
                 display: () => maxObject !== undefined,
                 text: () => {
                     if (maxObject) {
-                        return `Record set by ${maxObject.fighter_name.lastWord()} vs ${maxObject.opponent_name.lastWord()}: ${maxObject.time ? maxObject.time : +(maxObject.max + Number.EPSILON).toFixed(2)} ${maxObject.suffix ?? ""}`
+                        return `Record set by ${maxObject.fighter_name.split().pop()} vs ${maxObject.opponent_name.split().pop()}: ${maxObject.time ? maxObject.time : +(maxObject.max + Number.EPSILON).toFixed(2)} ${maxObject.suffix ?? ""}`
                     }
                 },
                 color: 'white',
@@ -110,8 +110,4 @@ export function BarChart({ rank, median, max: maxObject }) {
     )
 
 
-}
-
-String.prototype.lastWord = function lastWord() {
-    return this.split(" ").pop();
 }
