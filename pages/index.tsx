@@ -16,7 +16,7 @@ import { getMedians_grappling } from '../lib/medians/median_grappling';
 import { getMedians_striking } from '../lib/medians/median_striking';
 import { getMedians_time } from '../lib/medians/median_time';
 import { getMaxes_striking } from '../lib/maxes/maxes_striking';
-import { fastestFinishesId, perMinuteFilter, totalsFilter } from '../lib/RankVariables';
+import { fastestFinishesId, perMinuteFilter, totalsFilter } from '../lib/RankConstants';
 import { getMaxes_grappling } from '../lib/maxes/maxes_grappling';
 import { getMaxes_time } from '../lib/maxes/maxes_time';
 
