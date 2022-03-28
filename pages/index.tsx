@@ -1,18 +1,15 @@
-import { Footer } from './../components/Footer';
-import { TimeNotice } from './../components/TimeNotice';
-import { EventTitle } from './../components/EventTitle';
-import { SubRankTypeSwitch } from './../components/SubRankTypeSwitch';
-import { RankTypeSwitch } from './../components/RankTypeSwitch';
-import { Drop } from './../components/Drop';
-import { Nav } from './../components/Nav';
-import { RankList } from "./../components/RankList";
+import { Footer } from '../components/Footer';
+import { TimeNotice } from '../components/TimeNotice';
+import { EventTitle } from '../components/EventTitle';
+import { SubRankTypeSwitch } from '../components/SubRankTypeSwitch';
+import { RankTypeSwitch } from '../components/RankTypeSwitch';
+import { Drop } from '../components/Drop';
+import { Nav } from '../components/Nav';
+import { RankList } from "../components/RankList";
 import Head from 'next/head'
 
 import { useEffect, useState } from "react";
 
-import { getLastEventRanks_striking } from '../lib/lastEventRanks/lastEventRanks_striking';
-import { getLastEventRanks_grappling } from '../lib/lastEventRanks/lastEventRanks_grappling';
-import { getLastEventRanks_time } from '../lib/lastEventRanks/lastEventRanks_time';
 
 import { PrismaClient } from "@prisma/client";
 import { getMedians_grappling } from '../lib/medians/median_grappling';
@@ -26,7 +23,8 @@ import { getMaxes_time } from '../lib/maxes/maxes_time';
 import maxes from '../savedStats/maxes.json'
 
 import { rankTypes } from '../lib/utils';
-import { getLastEventRanks } from '../lib/lastEventRanks/lastEventRanksGetter';
+import { lastEventRanksGetter } from '../lib/lastEventRanks/lastEventRanksGetter';
+import { PrismaConnector } from '../db_connection/PrismaConnector';
 
 export default function Home({
   strikingRanks, grapplingRanks, timeRanks,
@@ -113,9 +111,10 @@ export default function Home({
 
 
 export async function getServerSideProps() {
-  const prisma = new PrismaClient()
+  const prismaClient = new PrismaClient()
+  const prismaConnector = new PrismaConnector(prismaClient)
 
-  const lastEventRanks = await getLastEventRanks(prisma)
+  const lastEventRanks = await lastEventRanksGetter.getLastEventRanks(prismaConnector)
   const strikingRanks = lastEventRanks[rankTypes.STRIKING]
   const grapplingRanks = lastEventRanks[rankTypes.GRAPPLING]
   const timeRanks = lastEventRanks[rankTypes.TIME]
@@ -123,7 +122,6 @@ export async function getServerSideProps() {
   const strikingMedians = []//await getMedians_striking(prisma)
   const grapplingMedians = []//await getMedians_grappling(prisma)
   const timeMedians = []//await getMedians_time(prisma)
-
 
   return {
     props: {
