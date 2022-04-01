@@ -3,11 +3,8 @@ import Chart from 'chart.js/auto';
 
 const FONT_COLOR = "white"
 
-export function BarChart({ rank, median, max: maxObject }) {
-    const rank_values = rank.content.map(x => x.value)
-    var values = median ?
-        [...rank_values, median.content.median] :
-        rank_values
+export function BarChart({ rank, max: maxObject }) {
+    var values = rank.content.map(x => x.value)
     var newRecord = false
 
     if (maxObject) {
@@ -19,8 +16,6 @@ export function BarChart({ rank, median, max: maxObject }) {
     }
     values.sort((a, b) => rank.descending ? b - a : a - b)
 
-    var medianFound = false
-    var medianIndex = -1
     var datasets = [
         {
             data: values,
@@ -33,12 +28,6 @@ export function BarChart({ rank, median, max: maxObject }) {
                         return "white"
                     }
                 }
-
-                if (median && value === median.content.median && !medianFound) {
-                    medianFound = true
-                    medianIndex = index
-                    return "white"
-                }
                 return "#164E63"//"#4c1d95"
             })
         }
@@ -50,9 +39,6 @@ export function BarChart({ rank, median, max: maxObject }) {
         } else {
             labels = [`Record`, ...labels]
         }
-    }
-    if (median) {
-        labels.splice(medianIndex, 0, "Median (all time)")
     }
 
     const data = {
@@ -91,7 +77,7 @@ export function BarChart({ rank, median, max: maxObject }) {
                 display: () => maxObject !== undefined,
                 text: () => {
                     if (maxObject) {
-                        return `Record set by ${maxObject.fighter_name.lastWord()} vs ${maxObject.opponent_name.lastWord()}: ${maxObject.time ? maxObject.time : +(maxObject.max + Number.EPSILON).toFixed(2)} ${maxObject.suffix ?? ""}`
+                        return `Record set by ${maxObject.fighter_name.split().pop()} vs ${maxObject.opponent_name.split().pop()}: ${maxObject.time ? maxObject.time : +(maxObject.max + Number.EPSILON).toFixed(2)} ${maxObject.suffix ?? ""}`
                     }
                 },
                 color: 'white',
@@ -110,8 +96,4 @@ export function BarChart({ rank, median, max: maxObject }) {
     )
 
 
-}
-
-String.prototype.lastWord = function lastWord() {
-    return this.split(" ").pop();
 }

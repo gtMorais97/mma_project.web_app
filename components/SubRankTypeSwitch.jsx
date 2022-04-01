@@ -3,7 +3,6 @@ export function SubRankTypeSwitch({
     setFilter,
     totalsFilter,
     setRankSelector,
-    undefined,
     radioStyle,
     perMinuteFilter
 }) {
