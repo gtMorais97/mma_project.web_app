@@ -10,31 +10,20 @@ import Head from 'next/head'
 
 import { useEffect, useState } from "react";
 
-
 import { PrismaClient } from "@prisma/client";
-import { getMedians_grappling } from '../lib/medians/median_grappling';
-import { getMedians_striking } from '../lib/medians/median_striking';
-import { getMedians_time } from '../lib/medians/median_time';
-import { getMaxes_striking } from '../lib/maxes/maxes_striking';
-import { fastestFinishesId, perMinuteFilter, totalsFilter } from '../lib/RankConstants';
-import { getMaxes_grappling } from '../lib/maxes/maxes_grappling';
-import { getMaxes_time } from '../lib/maxes/maxes_time';
 
-import maxes from '../savedStats/maxes.json'
 
 import { rankTypes } from '../lib/utils';
+import { fastestFinishesId, perMinuteFilter, totalsFilter } from '../lib/RankConstants';
 import { lastEventRanksGetter } from '../lib/lastEventRanks/lastEventRanksGetter';
+import maxes from '../savedStats/maxes.json';
 import { PrismaConnector } from '../db_connection/PrismaConnector';
 
 export default function Home({
   strikingRanks, grapplingRanks, timeRanks,
-  strikingMedians, grapplingMedians, timeMedians
 }) {
 
-
-
   const [currentRanks, setRanks] = useState(strikingRanks)
-  const [currentMedians, setMedians] = useState([])
   const [currentMaxes, setMaxes] = useState(maxes[rankTypes.STRIKING])
 
   const [rankType, setRankType] = useState(undefined)
@@ -46,17 +35,14 @@ export default function Home({
     switch (rankType) {
       case rankTypes.STRIKING:
         setRanks(strikingRanks)
-        setMedians(strikingMedians)
         setMaxes(maxes[rankTypes.STRIKING])
         break;
       case rankTypes.GRAPPLING:
         setRanks(grapplingRanks)
-        setMedians(grapplingMedians)
         setMaxes(maxes[rankTypes.GRAPPLING])
         break;
       case rankTypes.TIME:
         setRanks(timeRanks)
-        setMedians(timeMedians)
         setMaxes(maxes[rankTypes.TIME])
         break;
     }
@@ -95,7 +81,7 @@ export default function Home({
             :
             (rankSelector ? { [rankSelector]: currentRanks[rankSelector] } : currentRanks)
         }
-          medians={currentMedians} maxes={currentMaxes}
+          maxes={currentMaxes}
         />
 
         {currentRanks.hasOwnProperty(totalsFilter) && currentFilter === perMinuteFilter &&
@@ -111,27 +97,18 @@ export default function Home({
 
 
 export async function getServerSideProps() {
-  const prismaClient = new PrismaClient()
-  const prismaConnector = new PrismaConnector(prismaClient)
+  const prismaConnector = new PrismaConnector(new PrismaClient())
 
   const lastEventRanks = await lastEventRanksGetter.getLastEventRanks(prismaConnector)
   const strikingRanks = lastEventRanks[rankTypes.STRIKING]
   const grapplingRanks = lastEventRanks[rankTypes.GRAPPLING]
   const timeRanks = lastEventRanks[rankTypes.TIME]
 
-  const strikingMedians = []//await getMedians_striking(prisma)
-  const grapplingMedians = []//await getMedians_grappling(prisma)
-  const timeMedians = []//await getMedians_time(prisma)
-
   return {
     props: {
       strikingRanks: strikingRanks,
       grapplingRanks: grapplingRanks,
       timeRanks: timeRanks,
-
-      strikingMedians: strikingMedians,
-      grapplingMedians: grapplingMedians,
-      timeMedians: timeMedians,
 
       // strikingMaxes: strikingMaxes,
       // grapplingMaxes: grapplingMaxes,

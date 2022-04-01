@@ -1,6 +1,5 @@
-import { stringify } from "querystring"
 
-export function makeRankObject(id, descending, rank) {
+export function makeRankObject(id: string, descending: boolean, rank: Object) {
     return {
         id: id,
         descending: descending,
@@ -8,7 +7,7 @@ export function makeRankObject(id, descending, rank) {
     }
 }
 
-export function makeValueObject(id, value) {
+export function makeValueObject(id: string, value: any) {
     return {
         id: id,
         isTimeValue: false,
