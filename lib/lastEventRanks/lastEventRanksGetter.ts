@@ -1,7 +1,7 @@
 import * as rankConstants from "../RankConstants";
 import { makeRankObject, rankTypes } from "../utils";
 import { IDBConnector } from "../../db_connection/IDBConnector";
-import { QueryObject } from "../QueryObject";
+import { QueryObject } from "../common/QueryObject";
 import { LastEventQueryObjects } from "./lastEventRanksQueryObjects";
 
 export class lastEventRanksGetter {
