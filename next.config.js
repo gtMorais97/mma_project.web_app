@@ -7,5 +7,6 @@ module.exports = withPWA({
     register: true,
     skipWaiting: true,
   },
+  swcMinify: false,
 })
 
