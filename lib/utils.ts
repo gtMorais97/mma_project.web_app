@@ -6,7 +6,7 @@ export function makeRankObject(id: string, descending: boolean, rank: Object) {
         content: rank
     }
 }
-
+//comment
 export function makeValueObject(id: string, value: any) {
     return {
         id: id,
