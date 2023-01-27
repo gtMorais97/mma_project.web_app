@@ -10,7 +10,7 @@ export class PrismaConnector implements IDBConnector {
     }
 
     public async RunQuery(query: string) {
-    return this.client.$queryRawUnsafe(query);
+        return this.client.$queryRawUnsafe(query);
     }
 
 }
